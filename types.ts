@@ -57,3 +57,14 @@ export interface ImpactMetrics {
   moneySaved: number;
   activeStreak: number;
 }
+
+export interface RestaurantProfile {
+  userId: string;
+  businessName: string;
+  fssaiLicense: string;
+  contactPerson: string;
+  phone: string;
+  address: string;
+  isVerified: boolean;
+  createdAt: string;
+}

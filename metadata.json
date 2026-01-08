@@ -1,0 +1,8 @@
+{
+  "name": "FoodRescue.ai",
+  "description": "A hyperlocal food rescue network connecting surplus food donors with recipients via volunteer rescuers.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

@@ -1,8 +1,15 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { FoodItem } from '../types';
 
-// Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization to prevent app crash if API key is missing
+const getAiClient = () => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.warn("Missing GEMINI_API_KEY. AI features will be disabled.");
+    return null;
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 const modelName = 'gemini-3-flash-preview';
 
@@ -14,6 +21,15 @@ export const analyzeFoodSafety = async (
   description: string,
   preparedTime: string
 ): Promise<{ score: number; reasoning: string; handlingInstructions: string }> => {
+  const ai = getAiClient();
+  if (!ai) {
+    return {
+      score: 0,
+      reasoning: "AI service unavailable (Missing API Key).",
+      handlingInstructions: "Manual verification required."
+    };
+  }
+
   try {
     const prompt = `
       Analyze this food donation for safety and logistical viability.
@@ -63,6 +79,11 @@ export const analyzeFoodSafety = async (
  * Calculates equivalent CO2 and Meal value from raw text input.
  */
 export const estimateImpact = async (quantityDescription: string): Promise<{ co2SavedKg: number, mealsCount: number }> => {
+  const ai = getAiClient();
+  if (!ai) {
+    return { co2SavedKg: 0, mealsCount: 0 };
+  }
+
   try {
     const prompt = `
       Estimate the environmental impact of this quantity of food: "${quantityDescription}".

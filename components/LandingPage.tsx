@@ -71,15 +71,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
               <span className="relative">Get Started</span>
               <span className="material-icons-round ml-2 text-lg relative transition-transform group-hover:translate-x-1">arrow_forward</span>
             </a>
-            <a
-              href="#"
-              className="group inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white transition-all duration-300 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 focus:outline-none backdrop-blur-sm w-full sm:w-auto"
-            >
-              <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center mr-3 group-hover:bg-primary group-hover:text-black transition-colors duration-300">
-                <span className="material-icons-round text-sm">play_arrow</span>
-              </span>
-              Watch Video
-            </a>
+
           </div>
         </div>
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-50">
@@ -204,29 +196,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </section>
 
-      <section className="py-24 relative overflow-hidden bg-black border-t border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-black to-black"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/5">
-            <div className="p-6 group">
-              <p className="text-5xl md:text-6xl font-bold text-white mb-3 group-hover:scale-110 transition-transform duration-300 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">150k+</p>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">Meals Rescued</p>
-            </div>
-            <div className="p-6 group">
-              <p className="text-5xl md:text-6xl font-bold text-white mb-3 group-hover:scale-110 transition-transform duration-300 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">350+</p>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">Partner NGOs</p>
-            </div>
-            <div className="p-6 group">
-              <p className="text-5xl md:text-6xl font-bold text-white mb-3 group-hover:scale-110 transition-transform duration-300 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">80t</p>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">CO2 Saved</p>
-            </div>
-            <div className="p-6 group">
-              <p className="text-5xl md:text-6xl font-bold text-white mb-3 group-hover:scale-110 transition-transform duration-300 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">24/7</p>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">Operations</p>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <footer className="bg-surface-highlight/30 py-16 border-t border-white/5 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-6">

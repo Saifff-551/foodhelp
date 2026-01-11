@@ -28,9 +28,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             {/* Navbar - Matching LandingPage.tsx */}
             <nav className="flex justify-between items-center px-6 md:px-12 py-6 max-w-7xl mx-auto w-full sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-50">
                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('HOME')}>
-                    <div className="bg-emerald-100 p-2 rounded-lg">
-                        <Utensils className="w-6 h-6 text-emerald-600" />
-                    </div>
+                    <img src="/logo-github.png" alt="FoodRescue Logo" className="w-10 h-auto object-contain" />
                     <span className="text-xl font-bold text-gray-900 tracking-tight">{APP_NAME}</span>
                 </div>
 

@@ -11,12 +11,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
       <nav className="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
           <a className="flex items-center space-x-3 group" href="#">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary/20 rounded-xl blur-sm group-hover:bg-primary/40 transition-all duration-300"></div>
-              <div className="relative bg-black border border-primary/30 rounded-xl w-full h-full flex items-center justify-center">
-                <span className="material-icons-round text-primary group-hover:scale-110 transition-transform duration-300">restaurant</span>
-              </div>
-            </div>
+            <img src="/logo-github.png" alt="FoodRescue Logo" className="w-12 h-auto object-contain group-hover:scale-110 transition-transform duration-300" />
             <span className="self-center text-xl font-bold whitespace-nowrap text-white tracking-tight">FoodRescue<span className="text-primary">.ai</span></span>
           </a>
           <div className="flex md:order-2 space-x-3 md:space-x-4">
@@ -202,9 +197,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-tr from-primary to-primary-hover rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <span className="material-icons-round text-black text-xl">restaurant</span>
-              </div>
+              <img src="/logo-github.png" alt="FoodRescue Logo" className="w-10 h-auto object-contain" />
               <span className="text-2xl font-bold text-white">FoodRescue.ai</span>
             </div>
             <div className="flex space-x-8">

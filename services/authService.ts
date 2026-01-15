@@ -3,7 +3,9 @@ import {
     signInWithPopup,
     signOut,
     User as FirebaseUser,
-    onAuthStateChanged
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -17,6 +19,61 @@ export interface UserProfile {
     displayName: string | null;
     role: UserRole;
     photoURL: string | null;
+}
+
+export const signUpWithEmailAndPassword = async (email: string, password: string, name: string, role: UserRole): Promise<UserProfile | null> => {
+    try {
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        const user = result.user;
+
+        // Create user profile in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            email: user.email,
+            displayName: name,
+            photoURL: null, // No photo for email/password signup initially
+            role: role,
+            createdAt: new Date().toISOString()
+        });
+
+        return {
+            uid: user.uid,
+            email: user.email,
+            displayName: name,
+            photoURL: null,
+            role
+        };
+    } catch (error) {
+        console.error("Error signing up with email/password", error);
+        throw error;
+    }
+};
+
+export const loginWithEmailAndPassword = async (email: string, password: string): Promise<UserProfile | null> => {
+    try {
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        const user = result.user;
+
+        // Fetch role from Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        let role = UserRole.DONOR;
+        if (userDoc.exists()) {
+            role = userDoc.data().role as UserRole;
+        }
+
+        return {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName || user.email?.split('@')[0] || 'User',
+            photoURL: user.photoURL,
+            role
+        };
+    } catch (error) {
+        console.error("Error signing in with email/password", error);
+        throw error;
+    }
 }
 
 export const signInWithGoogle = async (desiredRole?: UserRole): Promise<UserProfile | null> => {
@@ -76,7 +133,7 @@ export const subscribeToAuthChanges = (callback: (user: UserProfile | null) => v
             callback({
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
-                displayName: firebaseUser.displayName,
+                displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || null,
                 photoURL: firebaseUser.photoURL,
                 role
             });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserRole } from '../types';
+import { Link } from 'react-router-dom';
 
 interface LandingPageProps {
   onLogin: (role: UserRole) => void;
@@ -15,6 +16,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
             <span className="self-center text-xl font-bold whitespace-nowrap text-white tracking-tight">FoodRescue<span className="text-primary">.ai</span></span>
           </a>
           <div className="flex md:order-2 space-x-3 md:space-x-4">
+            <Link to="/login" className="text-white bg-white/10 hover:bg-white/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors">
+              Log In
+            </Link>
             <button className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-lg md:hidden hover:bg-white/10" type="button">
               <span className="sr-only">Open main menu</span>
               <span className="material-icons-round">menu</span>
@@ -58,14 +62,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
             <span className="text-white font-medium block mt-2">Zero waste. Zero hunger.</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in-up w-full sm:w-auto" style={{ animationDelay: '0.3s' }}>
-            <a
-              href="#roles"
+            <Link
+              to="/signup"
               className="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black transition-all duration-300 bg-primary rounded-full hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] overflow-hidden w-full sm:w-auto"
             >
               <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
               <span className="relative">Get Started</span>
               <span className="material-icons-round ml-2 text-lg relative transition-transform group-hover:translate-x-1">arrow_forward</span>
-            </a>
+            </Link>
 
           </div>
         </div>
@@ -126,13 +130,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <p className="text-gray-400 mb-8 leading-relaxed text-sm h-16">
                   For Restaurants, Hotels, Caterers, and Supermarkets wanting to reduce waste and gain tax benefits.
                 </p>
-                <button
-                  onClick={() => onLogin(UserRole.DONOR)}
+                <Link
+                  to="/signup"
                   className="inline-flex items-center justify-between w-full text-sm font-bold text-white bg-white/5 border border-white/5 px-6 py-4 rounded-xl group-hover:bg-primary group-hover:text-black group-hover:border-primary transition-all duration-300"
                 >
                   <span>Donate Now</span>
                   <span className="material-icons-round text-lg transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -148,13 +152,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <p className="text-gray-400 mb-8 leading-relaxed text-sm h-16">
                   For NGOs, Shelters, Orphanages, and Community Fridges to claim fresh, safe meals instantly.
                 </p>
-                <button
-                  onClick={() => onLogin(UserRole.RECIPIENT)}
+                <Link
+                  to="/signup"
                   className="inline-flex items-center justify-between w-full text-sm font-bold text-white bg-white/5 border border-white/5 px-6 py-4 rounded-xl group-hover:bg-secondary-accent group-hover:text-black group-hover:border-secondary-accent transition-all duration-300"
                 >
                   <span>Find Food</span>
                   <span className="material-icons-round text-lg transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -170,13 +174,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <p className="text-gray-400 mb-8 leading-relaxed text-sm h-16">
                   For Volunteers and Gig-economy drivers to facilitate transport and earn impact points.
                 </p>
-                <button
-                  onClick={() => onLogin(UserRole.RESCUER)}
+                <Link
+                  to="/signup"
                   className="inline-flex items-center justify-between w-full text-sm font-bold text-white bg-white/5 border border-white/5 px-6 py-4 rounded-xl group-hover:bg-tertiary-accent group-hover:text-white group-hover:border-tertiary-accent transition-all duration-300"
                 >
                   <span>Start Rescuing</span>
                   <span className="material-icons-round text-lg transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </button>
+                </Link>
               </div>
             </div>
 

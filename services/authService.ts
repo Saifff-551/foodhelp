@@ -123,7 +123,8 @@ export const signInWithGoogle = async (desiredRole?: UserRole): Promise<UserProf
 export const updateUserRole = async (uid: string, role: UserRole): Promise<void> => {
     try {
         const userDocRef = doc(db, "users", uid);
-        await updateDoc(userDocRef, { role });
+        // Use setDoc with merge: true so it creates the document if it doesn't exist
+        await setDoc(userDocRef, { role }, { merge: true });
     } catch (error) {
         console.error("Error updating user role", error);
         throw error;

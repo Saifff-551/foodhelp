@@ -67,6 +67,7 @@ export interface RestaurantProfile {
   phone: string;
   address: string;
   isVerified: boolean;
+  googleBusinessLink?: string;
   createdAt: string;
 }
 
@@ -78,5 +79,6 @@ export interface NGOProfile {
   phone: string;
   address: string;
   isVerified: boolean;
+  googleBusinessLink?: string;
   createdAt: string;
 }

@@ -3,6 +3,7 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
+    setDoc,
     doc,
     onSnapshot,
     query,
@@ -10,7 +11,8 @@ import {
     Timestamp
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { Donation, DonationStatus } from "../types";
+import { Donation, DonationStatus, RestaurantProfile, NGOProfile, UserRole } from "../types";
+import { updateUserRole } from "./authService";
 
 export const subscribeToDonations = (callback: (donations: Donation[]) => void) => {
     if (!db) {
@@ -56,26 +58,31 @@ export const updateDonationStatus = async (
     }
 };
 
-export const registerRestaurant = async (profile: Omit<import("../types").RestaurantProfile, "isVerified" | "createdAt">) => {
+export const registerRestaurant = async (profileData: Omit<RestaurantProfile, "isVerified" | "createdAt">) => {
     try {
-        await addDoc(collection(db, "restaurants"), {
-            ...profile,
+        await setDoc(doc(db, "restaurants", profileData.userId), {
+            ...profileData,
             isVerified: false,
             createdAt: new Date().toISOString()
         });
+
+        // Update user role
+        await updateUserRole(profileData.userId, UserRole.DONOR);
     } catch (error) {
         console.error("Error registering restaurant: ", error);
         throw error;
     }
 };
 
-export const registerNGO = async (profile: Omit<import("../types").NGOProfile, "isVerified" | "createdAt">) => {
+export const registerNGO = async (profileData: Omit<NGOProfile, "isVerified" | "createdAt">) => {
     try {
-        await addDoc(collection(db, "ngos"), {
-            ...profile,
+        await setDoc(doc(db, "ngos", profileData.userId), {
+            ...profileData,
             isVerified: false,
             createdAt: new Date().toISOString()
         });
+
+        await updateUserRole(profileData.userId, UserRole.RECIPIENT);
     } catch (error) {
         console.error("Error registering NGO: ", error);
         throw error;

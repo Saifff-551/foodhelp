@@ -16,6 +16,7 @@ const RestaurantRegistration: React.FC<RestaurantRegistrationProps> = ({ onCompl
         fssaiLicense: '',
         address: '',
         phone: '',
+        googleBusinessLink: '',
         contactPerson: currentUser?.displayName || ''
     });
 
@@ -31,7 +32,8 @@ const RestaurantRegistration: React.FC<RestaurantRegistrationProps> = ({ onCompl
                 fssaiLicense: formData.fssaiLicense,
                 contactPerson: formData.contactPerson,
                 phone: formData.phone,
-                address: formData.address
+                address: formData.address,
+                googleBusinessLink: formData.googleBusinessLink
             });
             onComplete();
         } catch (error) {
@@ -162,6 +164,23 @@ const RestaurantRegistration: React.FC<RestaurantRegistrationProps> = ({ onCompl
                                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                     className="w-full bg-surface-highlight border border-white/10 text-white text-sm rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary block w-full pl-12 p-3.5 placeholder-gray-600 transition-all resize-none"
                                     placeholder="Full street address with landmark..."
+                                />
+                            </div>
+                        </div>
+
+                        {/* Google Maps Link */}
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Google Maps Business Link <span className="text-xs text-gray-600 normal-case">(Optional)</span></label>
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <MapPin className="h-5 w-5 text-gray-500 group-focus-within:text-primary transition-colors" />
+                                </div>
+                                <input
+                                    type="url"
+                                    value={formData.googleBusinessLink}
+                                    onChange={(e) => setFormData({ ...formData, googleBusinessLink: e.target.value })}
+                                    className="w-full bg-surface-highlight border border-white/10 text-white text-sm rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary block w-full pl-12 p-3.5 placeholder-gray-600 transition-all"
+                                    placeholder="https://maps.google.com/..."
                                 />
                             </div>
                         </div>

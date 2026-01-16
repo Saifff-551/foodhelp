@@ -7,6 +7,7 @@ import OnboardingModal from '../components/dashboard/OnboardingModal';
 import DonorHome from '../components/dashboard/DonorHome';
 import RecipientHome from '../components/dashboard/RecipientHome';
 import RescuerHome from '../components/dashboard/RescuerHome';
+import AdminDashboard from '../components/dashboard/AdminDashboard';
 import { Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -152,10 +153,7 @@ const Dashboard: React.FC = () => {
 
             {/* Fallback for ADMIN or unknown roles for now */}
             {user.role === UserRole.ADMIN && (
-                <div className="text-center p-12">
-                    <h2 className="text-2xl font-bold">Admin Dashboard</h2>
-                    <p>Under Construction</p>
-                </div>
+                <AdminDashboard currentUser={user} />
             )}
         </DashboardLayout>
     );

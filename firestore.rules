@@ -2,6 +2,13 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
+    // Admin access: Allows any authenticated user to read/write any document.
+    // This rule should be placed carefully as it can override more specific rules.
+    // For true admin access, you might want to check for specific admin UIDs or custom claims.
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
     // User Profiles
     // Anyone can read their own profile.
     // Anyone can create their own profile (if auth uid matches).

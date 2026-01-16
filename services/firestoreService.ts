@@ -8,7 +8,7 @@ import {
     onSnapshot,
     query,
     orderBy,
-    Timestamp
+    getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Donation, DonationStatus, RestaurantProfile, NGOProfile, UserRole } from "../types";
@@ -149,6 +149,43 @@ export const verifyDelivery = async (donationId: string) => {
         });
     } catch (error) {
         console.error("Error verifying delivery: ", error);
+        throw error;
+    }
+};
+
+export const fetchAllPendingVerifications = async () => {
+    try {
+        const restaurantsQuery = query(collection(db, "restaurants"), orderBy("createdAt", "desc"));
+        const ngosQuery = query(collection(db, "ngos"), orderBy("createdAt", "desc"));
+
+        const [restaurantSnap, ngoSnap] = await Promise.all([
+            getDocs(restaurantsQuery),
+            getDocs(ngosQuery)
+        ]);
+
+        const pendingRestaurants = restaurantSnap.docs
+            .map(doc => ({ id: doc.id, type: 'restaurant', ...doc.data() } as any))
+            .filter(r => !r.isVerified);
+
+        const pendingNGOs = ngoSnap.docs
+            .map(doc => ({ id: doc.id, type: 'ngo', ...doc.data() } as any))
+            .filter(n => !n.isVerified);
+
+        return [...pendingRestaurants, ...pendingNGOs];
+    } catch (error) {
+        console.error("Error fetching pending verifications: ", error);
+        throw error;
+    }
+};
+
+export const verifyEntity = async (collectionName: 'restaurants' | 'ngos', docId: string) => {
+    try {
+        const docRef = doc(db, collectionName, docId);
+        await updateDoc(docRef, {
+            isVerified: true
+        });
+    } catch (error) {
+        console.error("Error verifying entity: ", error);
         throw error;
     }
 };

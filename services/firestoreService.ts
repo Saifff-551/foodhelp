@@ -112,3 +112,43 @@ export const claimDonation = async (donationId: string, recipientId: string, rec
         throw error;
     }
 };
+
+export const acceptMission = async (donationId: string, rescuerId: string, rescuerName: string) => {
+    try {
+        const donationRef = doc(db, "donations", donationId);
+        await updateDoc(donationRef, {
+            rescuerId,
+            rescuerName,
+            updatedAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error accepting mission: ", error);
+        throw error;
+    }
+};
+
+export const verifyPickup = async (donationId: string) => {
+    try {
+        const donationRef = doc(db, "donations", donationId);
+        await updateDoc(donationRef, {
+            status: DonationStatus.PICKED_UP,
+            updatedAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error verifying pickup: ", error);
+        throw error;
+    }
+};
+
+export const verifyDelivery = async (donationId: string) => {
+    try {
+        const donationRef = doc(db, "donations", donationId);
+        await updateDoc(donationRef, {
+            status: DonationStatus.DELIVERED,
+            updatedAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error verifying delivery: ", error);
+        throw error;
+    }
+};

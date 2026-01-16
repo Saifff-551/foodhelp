@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { subscribeToAuthChanges, updateUserRole, UserProfile } from '../../services/authService';
-import { subscribeToDonations, updateDonationStatus, deleteDonation, claimDonation } from '../../services/firestoreService';
+import { subscribeToDonations, updateDonationStatus, deleteDonation, claimDonation, acceptMission, verifyPickup, verifyDelivery } from '../../services/firestoreService';
 import { UserRole, Donation, DonationStatus } from '../../types';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import OnboardingModal from '../components/dashboard/OnboardingModal';
 import DonorHome from '../components/dashboard/DonorHome';
 import RecipientHome from '../components/dashboard/RecipientHome';
+import RescuerHome from '../components/dashboard/RescuerHome';
 import { Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,6 +73,37 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const handleAcceptMission = async (id: string) => {
+        if (!user) return;
+        try {
+            await acceptMission(id, user.uid, user.displayName || 'Volunteer');
+            alert("Mission accepted! Head to the pickup location.");
+        } catch (error) {
+            console.error("Error accepting mission", error);
+        }
+    };
+
+    const handleVerifyPickup = async (id: string) => {
+        if (window.confirm("Confirming you have picked up the food?")) {
+            try {
+                await verifyPickup(id);
+            } catch (error) {
+                console.error("Error verifying pickup", error);
+            }
+        }
+    };
+
+    const handleVerifyDelivery = async (id: string) => {
+        if (window.confirm("Confirming food has been delivered to NGO?")) {
+            try {
+                await verifyDelivery(id);
+                alert("Great work! Mission complete.");
+            } catch (error) {
+                console.error("Error verifying delivery", error);
+            }
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -100,11 +132,21 @@ const Dashboard: React.FC = () => {
                 />
             )}
 
-            {(user.role === UserRole.RECIPIENT || user.role === UserRole.RESCUER) && (
+            {user.role === UserRole.RECIPIENT && (
                 <RecipientHome
                     currentUser={user}
                     donations={donations}
                     onClaimClick={handleClaimClick}
+                />
+            )}
+
+            {user.role === UserRole.RESCUER && (
+                <RescuerHome
+                    currentUser={user}
+                    donations={donations}
+                    onAcceptMission={handleAcceptMission}
+                    onVerifyPickup={handleVerifyPickup}
+                    onVerifyDelivery={handleVerifyDelivery}
                 />
             )}
 

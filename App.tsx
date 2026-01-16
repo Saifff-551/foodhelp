@@ -13,10 +13,22 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // Safety timeout: If auth doesn't respond in 2 seconds, assume not logged in.
+    const timeoutId = setTimeout(() => {
+      if (isAuthenticated === null) {
+        console.warn("Auth check timed out. Defaulting to unauthenticated.");
+        setIsAuthenticated(false);
+      }
+    }, 2000);
+
     const unsubscribe = subscribeToAuthChanges((user) => {
+      clearTimeout(timeoutId);
       setIsAuthenticated(!!user);
     });
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(timeoutId);
+      unsubscribe();
+    };
   }, []);
 
   if (isAuthenticated === null) {

@@ -14,10 +14,10 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-let app;
-let auth;
-let db;
-let analytics;
+let app = null;
+let auth = null;
+let db = null;
+let analytics = null;
 
 try {
   if (!firebaseConfig.apiKey) {

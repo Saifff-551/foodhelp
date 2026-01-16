@@ -97,3 +97,18 @@ export const deleteDonation = async (donationId: string) => {
         throw error;
     }
 };
+
+export const claimDonation = async (donationId: string, recipientId: string, recipientName: string) => {
+    try {
+        const donationRef = doc(db, "donations", donationId);
+        await updateDoc(donationRef, {
+            status: DonationStatus.CLAIMED,
+            recipientId,
+            recipientName,
+            updatedAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error claiming donation: ", error);
+        throw error;
+    }
+};

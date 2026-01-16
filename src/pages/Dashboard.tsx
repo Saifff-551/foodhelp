@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { subscribeToAuthChanges, updateUserRole, UserProfile } from '../../services/authService';
-import { subscribeToDonations, updateDonationStatus, deleteDonation } from '../../services/firestoreService';
+import { subscribeToDonations, updateDonationStatus, deleteDonation, claimDonation } from '../../services/firestoreService';
 import { UserRole, Donation, DonationStatus } from '../../types';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import OnboardingModal from '../components/dashboard/OnboardingModal';
@@ -49,12 +49,16 @@ const Dashboard: React.FC = () => {
     };
 
     const handleClaimClick = async (id: string) => {
-        // Placeholder for claim logic - could navigate to details or show modal
-        console.log("Claiming donation", id);
-        try {
-            await updateDonationStatus(id, DonationStatus.CLAIMED);
-        } catch (error) {
-            console.error("Error claiming donation", error);
+        if (!user) return;
+
+        if (window.confirm("Are you sure you want to claim this donation? By claiming, you agree to pick it up within the expiration time.")) {
+            try {
+                await claimDonation(id, user.uid, user.displayName || 'Anonymous NGO');
+                alert("Donation claimed successfully! Please coordinate pickup.");
+            } catch (error) {
+                console.error("Error claiming donation", error);
+                alert("Failed to claim donation. It might have been taken.");
+            }
         }
     };
 

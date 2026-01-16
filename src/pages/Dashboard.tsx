@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { subscribeToAuthChanges, updateUserRole, UserProfile } from '../../services/authService';
-import { subscribeToDonations, updateDonationStatus } from '../../services/firestoreService';
+import { subscribeToDonations, updateDonationStatus, deleteDonation } from '../../services/firestoreService';
 import { UserRole, Donation, DonationStatus } from '../../types';
 import DashboardLayout from '../../components/dashboard/DashboardLayout';
 import OnboardingModal from '../../components/dashboard/OnboardingModal';
@@ -58,6 +58,16 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const handleDeleteClick = async (id: string) => {
+        if (window.confirm("Are you sure you want to delete this listing?")) {
+            try {
+                await deleteDonation(id);
+            } catch (error) {
+                console.error("Error deleting donation", error);
+            }
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -82,6 +92,7 @@ const Dashboard: React.FC = () => {
                     currentUser={user}
                     donations={donations}
                     onPostClick={handlePostClick}
+                    onDeleteClick={handleDeleteClick}
                 />
             )}
 

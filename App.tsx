@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import Dashboard from './src/pages/Dashboard';
+import PostDonationPage from './src/pages/PostDonationPage';
 import ProtectedRoute from './src/routes/ProtectedRoute';
 import { subscribeToAuthChanges, UserProfile } from './services/authService';
 import { Loader2 } from 'lucide-react';
@@ -34,6 +35,7 @@ const App: React.FC = () => {
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/post" element={<PostDonationPage />} />
         </Route>
 
         {/* Fallback */}

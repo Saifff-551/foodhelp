@@ -2,6 +2,7 @@ import {
     collection,
     addDoc,
     updateDoc,
+    deleteDoc,
     doc,
     onSnapshot,
     query,
@@ -72,6 +73,15 @@ export const registerNGO = async (profile: Omit<import("../types").NGOProfile, "
         });
     } catch (error) {
         console.error("Error registering NGO: ", error);
+        throw error;
+    }
+};
+
+export const deleteDonation = async (donationId: string) => {
+    try {
+        await deleteDoc(doc(db, "donations", donationId));
+    } catch (error) {
+        console.error("Error deleting donation: ", error);
         throw error;
     }
 };

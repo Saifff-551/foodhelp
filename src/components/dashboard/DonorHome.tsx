@@ -7,9 +7,10 @@ interface DonorHomeProps {
     currentUser: UserProfile;
     donations: Donation[];
     onPostClick: () => void;
+    onDeleteClick: (id: string) => void;
 }
 
-const DonorHome: React.FC<DonorHomeProps> = ({ currentUser, donations, onPostClick }) => {
+const DonorHome: React.FC<DonorHomeProps> = ({ currentUser, donations, onPostClick, onDeleteClick }) => {
     const activeDonations = donations.filter(d => d.donorId === currentUser.uid);
 
     return (
@@ -79,7 +80,12 @@ const DonorHome: React.FC<DonorHomeProps> = ({ currentUser, donations, onPostCli
                                         <p className="text-xs text-gray-400">Expires in 2 hrs</p>
                                     </div>
                                 </div>
-                                <button className="w-full py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Manage</button>
+                                <button
+                                    onClick={() => onDeleteClick(donation.id)}
+                                    className="w-full py-2 border border-gray-200 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
+                                >
+                                    Remove Listing
+                                </button>
                             </div>
                         ))}
                     </div>

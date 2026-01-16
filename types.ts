@@ -69,3 +69,14 @@ export interface RestaurantProfile {
   isVerified: boolean;
   createdAt: string;
 }
+
+export interface NGOProfile {
+  userId: string;
+  organizationName: string;
+  registrationNumber: string; // NGO unique ID
+  contactPerson: string;
+  phone: string;
+  address: string;
+  isVerified: boolean;
+  createdAt: string;
+}

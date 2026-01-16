@@ -13,6 +13,11 @@ import { db } from "../firebase";
 import { Donation, DonationStatus } from "../types";
 
 export const subscribeToDonations = (callback: (donations: Donation[]) => void) => {
+    if (!db) {
+        console.warn("Firestore not initialized");
+        callback([]);
+        return () => { };
+    }
     const q = query(collection(db, "donations"), orderBy("createdAt", "desc"));
 
     return onSnapshot(q, (snapshot) => {

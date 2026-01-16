@@ -20,8 +20,11 @@ const App: React.FC = () => {
   }, []);
 
   if (isAuthenticated === null) {
-    // Initial auth check
-    return null;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <Loader2 className="w-10 h-10 text-primary animate-spin" />
+      </div>
+    );
   }
 
   return (

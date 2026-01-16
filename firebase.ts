@@ -14,13 +14,21 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-if (!import.meta.env.VITE_FIREBASE_API_KEY) {
-  throw new Error("Missing VITE_FIREBASE_API_KEY. Check your .env file or Vercel Environment Variables.");
-}
+let app;
+let auth;
+let db;
+let analytics;
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
+try {
+  if (!firebaseConfig.apiKey) {
+    console.warn("Missing VITE_FIREBASE_API_KEY. App will not function correctly.");
+  }
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  analytics = getAnalytics(app);
+} catch (error) {
+  console.error("Firebase initialization failed:", error);
+}
 
 export { auth, db, analytics };

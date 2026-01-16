@@ -139,6 +139,11 @@ export const signOutUser = async () => {
 };
 
 export const subscribeToAuthChanges = (callback: (user: UserProfile | null) => void) => {
+    if (!auth) {
+        console.warn("Auth service not initialized (missing config)");
+        callback(null);
+        return () => { };
+    }
     return onAuthStateChanged(auth, async (firebaseUser) => {
         if (firebaseUser) {
             const userDocRef = doc(db, "users", firebaseUser.uid);
